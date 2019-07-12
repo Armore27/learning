@@ -1,0 +1,18 @@
+GUIFOUR;
+pause(10);
+load('a.ml.mat', 'table');
+koef = (table(:,1))';
+koef_all = [];
+dv_num = [1:5];
+for i = 1:5
+    %подвинуть (i-ый) движок на 1 шаг
+    GUIFOUR;
+    load('a.ml.mat', 'table');
+    koef = (table(:,1))';
+    koef_all = [koef_all; koef];
+    %отодвинуть (i-ый) движок обратно на 1 шаг
+end
+[final_dv] = Vichisl_final_dv(dv_num, koef_all);
+if koef_all(final_dv, 1) ~= 0.02
+%двигать выбранный движок до тех пор, пока коэффициент не будет равен 0.02
+end
