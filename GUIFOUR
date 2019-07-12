@@ -1,0 +1,1605 @@
+function varargout = GUIFOUR(varargin)
+% GUIFOUR MATLAB code for GUIFOUR.fig
+%      GUIFOUR, by itself, creates a new GUIFOUR or raises the existing
+%      singleton*.
+%
+%      H = GUIFOUR returns the handle to a new GUIFOUR or the handle to
+%      the existing singleton*.
+%
+%      GUIFOUR('CALLBACK',hObject,eventData,handles,...) calls the local
+%      function named CALLBACK in GUIFOUR.M with the given input arguments.
+%
+%      GUIFOUR('Property','Value',...) creates a new GUIFOUR or raises the
+%      existing singleton*.  Starting from the left, property value pairs are
+%      applied to the GUI before GUIFOUR_OpeningFcn gets called.  An
+%      unrecognized property name or invalid value makes property application
+%      stop.  All inputs are passed to GUIFOUR_OpeningFcn via varargin.
+%
+%      *See GUI Options on GUIDE's Tools menu.  Choose "GUI allows only one
+%      instance to run (singleton)".
+%
+% See also: GUIDE, GUIDATA, GUIHANDLES
+
+% Edit the above text to modify the response to help GUIFOUR
+
+% Last Modified by GUIDE v2.5 08-Feb-2019 17:25:14
+
+% Begin initialization code - DO NOT EDIT
+gui_Singleton = 1;
+gui_State = struct('gui_Name',       mfilename, ...
+                   'gui_Singleton',  gui_Singleton, ...
+                   'gui_OpeningFcn', @GUIFOUR_OpeningFcn, ...
+                   'gui_OutputFcn',  @GUIFOUR_OutputFcn, ...
+                   'gui_LayoutFcn',  [] , ...
+                   'gui_Callback',   []);
+if nargin && ischar(varargin{1})
+    gui_State.gui_Callback = str2func(varargin{1});
+end
+
+if nargout
+    [varargout{1:nargout}] = gui_mainfcn(gui_State, varargin{:});
+else
+    gui_mainfcn(gui_State, varargin{:});
+end
+
+% End initialization code - DO NOT EDIT
+%%%%%%%%%%%%%%%%
+
+
+
+
+% --- Executes just before GUIFOUR is made visible.
+function GUIFOUR_OpeningFcn(hObject, eventdata, handles, varargin)
+% This function has no output args, see OutputFcn.
+% hObject    handle to figure
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+% varargin   command line arguments to GUIFOUR (see VARARGIN)
+
+% Choose default command line output for GUIFOUR
+handles.output = hObject;
+
+% Update handles structure
+guidata(hObject, handles);
+
+% UIWAIT makes GUIFOUR wait for user response (see UIRESUME)
+% uiwait(handles.figure1);
+% clc;
+global x Ex_flag In_flag sx sy xcentre ycentre f h_ex h_in h_ex2 h_in2...
+    num numNull xn h_image fftx fftx_shift f1 f2 fftx_shift_filter...
+    ha h_image_ha flag_fig pathname top_corrPI phi_ab_all aber_std...
+    a b c Zmso Z n x1 y1 num_calc Zost PathName tempSize sfigure0...
+    sfigure C0 F0 C F x_series temp_series flag_series xcorr1 xcorr2 table_series Z_series D_ex D_in
+Ex_flag=0;
+In_flag=0;
+set(handles.Ex_Ap,'Value',Ex_flag);
+set(handles.In_Ap,'Value',In_flag);
+f=0:90;
+flag_fig=0;         %1 - выводятся фигуры, 0 - нет
+num_calc=0;
+tempSize=1;
+% --- Outputs from this function are returned to the command line.
+function varargout = GUIFOUR_OutputFcn(hObject, eventdata, handles) 
+% varargout  cell array for returning output args (see VARARGOUT);
+% hObject    handle to figure
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+% Get default command line output from handles structure
+varargout{1} = handles.output;
+
+% --------------------------------------------------------------------
+function uipushtool1_ClickedCallback(hObject, eventdata, handles)
+% hObject    handle to uipushtool1 (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+% % --- Executes on button press in pbtloader.
+% function pbtloader_Callback(hObject, eventdata, handles)
+% % hObject    handle to pbtloader (see GCBO)
+% % eventdata  reserved - to be defined in a future version of MATLAB
+% % handles    structure with handles and user data (see GUIDATA)
+% clc;
+global x Ex_flag In_flag sx sy xcentre ycentre f h_ex h_in h_ex2 h_in2...
+    num numNull xn h_image fftx fftx_shift f1 f2 fftx_shift_filter...
+    ha h_image_ha flag_fig pathname top_corrPI phi_ab_all aber_std...
+    a b c Zmso Z n x1 y1 num_calc Zost PathName tempSize sfigure0...
+    sfigure C0 F0 C F x_series temp_series flag_series xcorr1 xcorr2 table_series Z_series D_ex D_in
+
+% flag_fig=1;         %1 - выводятся фигуры, 0 - нет
+% if num_calc==0
+% %     PathName='F:\Documents and Settings\Глебан\Рабочий стол\Лептон\'
+%     PathName='С:\';
+% end
+num_calc=num_calc+1;
+
+% [FileName, PathName]=uigetfile(PathName,'select image','*.*');
+[FileName, PathName]=uigetfile({'*.jpg;*.tif;*.png;*.bmp;*.tiff;*.mat','All Image Files';'*.*','All Files' },'Выберите интероферограмму',[PathName]);
+set(handles.txt_path,'String',[PathName,FileName]);
+pathname=[PathName,FileName];
+[pathstr,name,ext]=fileparts([PathName,'\',FileName]);
+
+flag_series=0;
+temp_series=0;
+if ext=='.mat'
+%     a=whos([PathName,'\',FileName])
+    load([PathName,'\',FileName]);
+    exist xx;
+    if  ans==1
+        x=xx{1,1};
+        x_series=xx;
+        flag_series=1;
+        temp_series=1;            
+        x=x_series{1,temp_series};        
+        x=x';
+    end
+
+% elseif ext=='.bmp'
+%     x=imread([PathName,'\',FileName]);
+% elseif ext=='.png'
+%     x=imread([PathName,'\',FileName]);
+else
+        x=imread([PathName,'\',FileName]);
+
+%     x=s.x;
+end
+if length(size(x))==3
+    x=x(:,:,1);
+end
+x=x(end:-1:1,:,1);
+
+x=double(x);
+x=x-mean(mean(x));
+% if num_calc==1
+%     ha=get(handles.axInterf);
+ha=handles.axInterf;
+%     num_calc=num_calc+1
+% else
+% %     propedit
+%     set(handles.axInterf,ha)
+% end
+
+cla;
+hold on
+h_image_ha=imagesc(x);
+colormap('gray')
+colorbar;
+axis([1 size(x,2) 1 size(x,1)]);
+caxis([min(x(:)) max(x(:))]);
+view([0 0 1]);
+colorbar;
+xlabel('pix');
+ylabel('pix');
+% axis equal
+% title('Interferomgram')
+title('');
+% plot([1 1])
+if flag_series==1
+    ha=handles.axInterf;
+    axes(ha)
+    title(['frame ' num2str(temp_series) '(' num2str(size(x_series,2)) ')']);
+end
+if flag_fig==1
+    figure(1)
+    clf;
+    hold on
+    h_image=imagesc(x)
+    axis([1 size(x,2) 1 size(x,1)])
+    colormap('gray')
+    colorbar;
+%     axis equal
+%     title('Interferogram')
+xlabel('pix');
+ylabel('pix');
+    plot([1 1])
+end
+
+if num_calc==1 || sy~=size(x,1) || sx~=size(x,2)
+    
+    sy=size(x,1);
+    sx=size(x,2);
+    
+    xcentre=round(sx/2);
+    ycentre=round(sy/2);
+
+    D_ex=round(0.9*(min([sx sy])));
+    D_in=round(0.45*(min([sx sy])));
+end
+set(handles.slider_Ex,'Min',1);
+set(handles.slider_Ex,'Max',floor(min([sx sy])));
+
+set(handles.slider_In,'Min',1);
+set(handles.slider_In,'Max',floor(min([sx sy])));
+
+set(handles.slider_Ex,'Value',D_ex);
+set(handles.slider_In,'Value',D_in);
+Ex_flag=0;
+set(handles.Ex_Ap,'Value',Ex_flag);
+In_flag=0;
+set(handles.In_Ap,'Value',In_flag);
+
+% --- Executes on slider movement.
+function slider_Ex_Callback(hObject, eventdata, handles)
+% hObject    handle to slider_Ex (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+% Hints: get(hObject,'Value') returns position of slider
+%        get(hObject,'Min') and get(hObject,'Max') to determine range of slider
+global x Ex_flag In_flag sx sy xcentre ycentre f h_ex h_in h_ex2 h_in2...
+    num numNull xn h_image fftx fftx_shift f1 f2 fftx_shift_filter...
+    ha h_image_ha flag_fig pathname top_corrPI phi_ab_all aber_std...
+    a b c Zmso Z n x1 y1 num_calc Zost PathName tempSize sfigure0...
+    sfigure C0 F0 C F x_series temp_series flag_series xcorr1 xcorr2 table_series Z_series D_ex D_in
+% set(hObject,'Min',1)
+% set(hObject,'Max',0.9*min([sx sy]))
+if Ex_flag==1
+    D_ex=round(get(hObject,'Value'));
+    if flag_fig==1
+        figure(1)
+        hold on
+        yEx=D_ex/2*sind(f);
+        xEx=D_ex/2*cosd(f);
+        set(h_ex,'YData',[yEx yEx -yEx -yEx zeros(1,61) -30:30]+ycentre);
+        set(h_ex,'XData',[xEx -xEx -xEx xEx -30:30 zeros(1,61)]+xcentre);
+    end    
+    
+
+    ha=handles.axInterf;
+    axes(ha)
+    hold on
+    yEx=D_ex/2*sind(f);
+    xEx=D_ex/2*cosd(f);
+    set(h_ex2,'YData',[yEx yEx -yEx -yEx zeros(1,61) -30:30]+ycentre);
+    set(h_ex2,'XData',[xEx -xEx -xEx xEx -30:30 zeros(1,61)]+xcentre);
+
+end
+
+% --- Executes during object creation, after setting all properties.
+function slider_Ex_CreateFcn(hObject, eventdata, handles)
+% hObject    handle to slider_Ex (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    empty - handles not created until after all CreateFcns called
+
+% Hint: slider controls usually have a light gray background.
+if isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
+    set(hObject,'BackgroundColor',[.9 .9 .9]);
+end
+global x Ex_flag In_flag sx sy xcentre ycentre f h_ex h_in h_ex2 h_in2...
+    num numNull xn h_image fftx fftx_shift f1 f2 fftx_shift_filter...
+    ha h_image_ha flag_fig pathname top_corrPI phi_ab_all aber_std...
+    a b c Zmso Z n x1 y1 num_calc Zost PathName tempSize sfigure0...
+    sfigure C0 F0 C F x_series temp_series flag_series xcorr1 xcorr2 table_series Z_series D_ex D_in
+% 
+% set(hObject,'Min',1)
+% set(hObject,'Max',floor(min([sx sy])))
+
+% --- Executes on slider movement.
+function slider_In_Callback(hObject, eventdata, handles)
+% hObject    handle to slider_In (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+% Hints: get(hObject,'Value') returns position of slider
+%        get(hObject,'Min') and get(hObject,'Max') to determine range of slider
+global x Ex_flag In_flag sx sy xcentre ycentre f h_ex h_in h_ex2 h_in2...
+    num numNull xn h_image fftx fftx_shift f1 f2 fftx_shift_filter...
+    ha h_image_ha flag_fig pathname top_corrPI phi_ab_all aber_std...
+    a b c Zmso Z n x1 y1 num_calc Zost PathName tempSize sfigure0...
+    sfigure C0 F0 C F x_series temp_series flag_series xcorr1 xcorr2 table_series Z_series D_ex D_in
+In_flag=get(handles.In_Ap,'Value');
+if In_flag==1
+    D_in=round(get(hObject,'Value'));
+            yIn=D_in/2*sind(f);
+            xIn=D_in/2*cosd(f);
+        if flag_fig==1
+            figure(1)
+            hold on
+            set(h_in,'YData',[yIn yIn -yIn -yIn]+ycentre);
+            set(h_in,'XData',[xIn -xIn -xIn xIn]+xcentre);
+        end
+            set(h_in2,'YData',[yIn yIn -yIn -yIn]+ycentre);
+            set(h_in2,'XData',[xIn -xIn -xIn xIn]+xcentre);
+
+end
+
+
+% --- Executes during object creation, after setting all properties.
+function slider_In_CreateFcn(hObject, eventdata, handles)
+% hObject    handle to slider_In (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    empty - handles not created until after all CreateFcns called
+
+% Hint: slider controls usually have a light gray background.
+if isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
+    set(hObject,'BackgroundColor',[.9 .9 .9]);
+end
+global x Ex_flag In_flag sx sy xcentre ycentre f h_ex h_in h_ex2 h_in2...
+    num numNull xn h_image fftx fftx_shift f1 f2 fftx_shift_filter...
+    ha h_image_ha flag_fig pathname top_corrPI phi_ab_all aber_std...
+    a b c Zmso Z n x1 y1 num_calc Zost PathName tempSize sfigure0...
+    sfigure C0 F0 C F x_series temp_series flag_series xcorr1 xcorr2 table_series Z_series D_ex D_in
+% set(hObject,'Min',1)
+% set(hObject,'Max',floor(min([sx sy])))
+
+% --- Executes on button press in Ex_Ap.
+function Ex_Ap_Callback(hObject, eventdata, handles)
+% hObject    handle to Ex_Ap (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+% Hint: get(hObject,'Value') returns toggle state of Ex_Ap
+global x Ex_flag In_flag sx sy xcentre ycentre f h_ex h_in h_ex2 h_in2...
+    num numNull xn h_image fftx fftx_shift f1 f2 fftx_shift_filter...
+    ha h_image_ha flag_fig pathname top_corrPI phi_ab_all aber_std...
+    a b c Zmso Z n x1 y1 num_calc Zost PathName tempSize sfigure0...
+    sfigure C0 F0 C F x_series temp_series flag_series xcorr1 xcorr2 table_series Z_series D_ex D_in
+Ex_flag=get(handles.Ex_Ap,'Value');
+if Ex_flag==1;
+    D_ex=round(get(handles.slider_Ex,'Value'));
+            yEx=D_ex/2*sind(f);
+            xEx=D_ex/2*cosd(f);
+        if flag_fig==1;
+            figure(1)
+            hold on
+            h_ex=plot([xEx -xEx -xEx xEx -30:30 zeros(1,61)]+xcentre,[yEx yEx -yEx -yEx zeros(1,61) -30:30]+ycentre,'r.');
+            set(h_ex,'MarkerSize',10);
+        end
+    
+    ha=handles.axInterf;
+    axes(ha);
+    h_ex2=plot([xEx -xEx -xEx xEx -30:30 zeros(1,61)]+xcentre,[yEx yEx -yEx -yEx zeros(1,61) -30:30]+ycentre,'r.');
+    set(h_ex2,'MarkerSize',10);
+    
+end
+% if Ex_flag==0
+%     123
+%     set(h_ex,'MarkerSize',0.00005)
+% end
+% Ex_flag=get(handles.Ex_Ap)
+
+% --- Executes on button press in In_Ap.
+function In_Ap_Callback(hObject, eventdata, handles)
+% hObject    handle to In_Ap (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+% Hint: get(hObject,'Value') returns toggle state of In_Ap
+global x Ex_flag In_flag sx sy xcentre ycentre f h_ex h_in h_ex2 h_in2...
+    num numNull xn h_image fftx fftx_shift f1 f2 fftx_shift_filter...
+    ha h_image_ha flag_fig pathname top_corrPI phi_ab_all aber_std...
+    a b c Zmso Z n x1 y1 num_calc Zost PathName tempSize sfigure0...
+    sfigure C0 F0 C F x_series temp_series flag_series xcorr1 xcorr2 table_series Z_series D_ex D_in
+In_flag=get(handles.In_Ap,'Value');
+if In_flag==1
+    D_in=round(get(handles.slider_In,'Value'));
+            yIn=D_in/2*sind(f);
+            xIn=D_in/2*cosd(f);
+        if flag_fig==1
+            figure(1)
+            hold on
+            h_in=plot([xIn -xIn -xIn xIn]+xcentre,[yIn yIn -yIn -yIn]+ycentre,'g.');
+            set(h_in,'MarkerSize',10);
+        end
+    
+    ha=handles.axInterf;
+    axes(ha)
+    h_in2=plot([xIn -xIn -xIn xIn]+xcentre,[yIn yIn -yIn -yIn]+ycentre,'g.');
+    set(h_in2,'MarkerSize',10);
+end
+% --- Executes on button press in PB_centre.
+function PB_centre_Callback(hObject, eventdata, handles)
+% hObject    handle to PB_centre (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+global x Ex_flag In_flag sx sy xcentre ycentre f h_ex h_in h_ex2 h_in2...
+    num numNull xn h_image fftx fftx_shift f1 f2 fftx_shift_filter...
+    ha h_image_ha flag_fig pathname top_corrPI phi_ab_all aber_std...
+    a b c Zmso Z n x1 y1 num_calc Zost PathName tempSize sfigure0...
+    sfigure C0 F0 C F x_series temp_series flag_series xcorr1 xcorr2 table_series Z_series D_ex D_in
+% figure(1);
+ha=handles.axInterf;
+axes(ha)
+[xcentre,ycentre] = ginput(1);
+xcentre=round(xcentre);
+ycentre=round(ycentre);
+Ex_flag=get(handles.Ex_Ap,'Value');
+if Ex_flag==1
+    D_ex=round(get(handles.slider_Ex,'Value'));
+
+%     hold on
+%     h_ex=plot([xEx xEx -xEx -xEx]+xcentre,[yEx -yEx -yEx +yEx]+ycentre,'r-')
+%     set(h_ex,'YData',[yEx yEx -yEx -yEx zeros(1,61) -30:30]+ycentre);
+%     set(h_ex,'XData',[xEx -xEx -xEx xEx -30:30 zeros(1,61)]+xcentre);
+
+    yEx=D_ex/2*sind(f);
+    xEx=D_ex/2*cosd(f);
+%     h_ex=plot([xEx -xEx -xEx xEx -30:30 zeros(1,61)]+xcentre,[yEx yEx -yEx -yEx zeros(1,61) -30:30]+ycentre,'r.')
+	if flag_fig==1
+        figure(1)
+        set(h_ex,'YData',[yEx yEx -yEx -yEx zeros(1,61) -30:30]+ycentre);
+        set(h_ex,'XData',[xEx -xEx -xEx xEx -30:30 zeros(1,61)]+xcentre);
+        set(h_ex,'MarkerSize',10)
+    end
+    set(h_ex2,'YData',[yEx yEx -yEx -yEx zeros(1,61) -30:30]+ycentre);
+    set(h_ex2,'XData',[xEx -xEx -xEx xEx -30:30 zeros(1,61)]+xcentre);
+    set(h_ex2,'MarkerSize',10)
+end
+In_flag=get(handles.In_Ap,'Value');
+if In_flag==1
+    D_in=round(get(handles.slider_In,'Value'));
+    yIn=D_in/2*sind(f);
+    xIn=D_in/2*cosd(f);
+	if flag_fig==1
+        figure(1)
+        hold on
+    %     h_in=plot([xIn -xIn -xIn xIn]+xcentre,[yIn yIn -yIn -yIn]+ycentre,'g.')
+        set(h_in,'YData',[yIn yIn -yIn -yIn]+ycentre);
+        set(h_in,'XData',[xIn -xIn -xIn xIn]+xcentre);
+        set(h_in,'MarkerSize',10);
+    end
+    set(h_in2,'YData',[yIn yIn -yIn -yIn]+ycentre);
+    set(h_in2,'XData',[xIn -xIn -xIn xIn]+xcentre);
+    set(h_in2,'MarkerSize',10);
+end
+% --- Executes on button press in Cut.
+function Cut_Callback(hObject, eventdata, handles)
+% hObject    handle to Cut (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+global x Ex_flag In_flag sx sy xcentre ycentre f h_ex h_in h_ex2 h_in2...
+    num numNull xn h_image fftx fftx_shift f1 f2 fftx_shift_filter...
+    ha h_image_ha flag_fig pathname top_corrPI phi_ab_all aber_std...
+    a b c Zmso Z n x1 y1 num_calc Zost PathName tempSize sfigure0...
+    sfigure C0 F0 C F x_series temp_series flag_series xcorr1 xcorr2 table_series Z_series D_ex D_in
+xn=x;
+Ex_flag=get(handles.Ex_Ap,'Value');
+num1=[];
+num2=[];
+if Ex_flag==1
+    D_ex=round(get(handles.slider_Ex,'Value'));
+    num1=find((meshgrid(1:sx,1:sy)-xcentre).^2+(meshgrid(1:sy,1:sx)'-ycentre).^2>(D_ex/2)^2);
+end
+if In_flag==1
+    D_in=round(get(handles.slider_In,'Value'));
+    num2=find((meshgrid(1:sx,1:sy)-xcentre).^2+(meshgrid(1:sy,1:sx)'-ycentre).^2<(D_in/2)^2);
+end
+numNull=[num1;num2];
+xn(numNull)=0;
+dop=x-x+1;
+dop(numNull)=0;
+num=find(dop==1);
+sm=sum(dop');
+colormap('gray')
+colorbar;
+% axis equal
+% title('Interferomgram')
+
+Ex_flag=get(handles.Ex_Ap,'Value');
+if Ex_flag==1
+
+    D_ex=round(get(handles.slider_Ex,'Value'));
+    yEx=D_ex/2*sind(f);
+    xEx=D_ex/2*cosd(f);
+    
+	if flag_fig==1
+        figure(1)
+        hold on
+        h_image=imagesc(xn);
+        h_ex=plot([xEx -xEx -xEx xEx -30:30 zeros(1,61)]+xcentre,[yEx yEx -yEx -yEx zeros(1,61) -30:30]+ycentre,'r.')
+
+        set(h_ex,'YData',[yEx yEx -yEx -yEx zeros(1,61) -30:30]+ycentre);
+        set(h_ex,'XData',[xEx -xEx -xEx xEx -30:30 zeros(1,61)]+xcentre);
+    end
+    if flag_series==0 || temp_series==size(x_series,2) || temp_series==1
+        ha=handles.axInterf;
+        axes(ha)
+        hold on
+        imagesc(xn);
+        h_ex2=plot([xEx -xEx -xEx xEx -30:30 zeros(1,61)]+xcentre,[yEx yEx -yEx -yEx zeros(1,61) -30:30]+ycentre,'r.');
+
+        set(h_ex2,'YData',[yEx yEx -yEx -yEx zeros(1,61) -30:30]+ycentre);
+        set(h_ex2,'XData',[xEx -xEx -xEx xEx -30:30 zeros(1,61)]+xcentre);
+    end
+end
+if In_flag==1
+
+    D_in=round(get(handles.slider_In,'Value'));
+    yIn=D_in/2*sind(f);
+    xIn=D_in/2*cosd(f);
+	if flag_fig==1
+        figure(1)
+        hold on
+        h_in=plot([xIn -xIn -xIn xIn]+xcentre,[yIn yIn -yIn -yIn]+ycentre,'g.')
+        set(h_in,'YData',[yIn yIn -yIn -yIn]+ycentre);
+        set(h_in,'XData',[xIn -xIn -xIn xIn]+xcentre);
+    end
+        if flag_series==0 || temp_series==size(x_series,2)
+            ha=handles.axInterf;
+            axes(ha)
+            h_in2=plot([xIn -xIn -xIn xIn]+xcentre,[yIn yIn -yIn -yIn]+ycentre,'g.');
+
+            set(h_in2,'YData',[yIn yIn -yIn -yIn]+ycentre);
+            set(h_in2,'XData',[xIn -xIn -xIn xIn]+xcentre);
+        end
+end
+xn(num)=xn(num)-mean(xn(num));
+xn(numNull)=0;
+
+% --- Executes on selection change in PMFilter.
+function PMFilter_Callback(hObject, eventdata, handles)
+% hObject    handle to PMFilter (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+% Hints: contents = cellstr(get(hObject,'String')) returns PMFilter contents as cell array
+%        contents{get(hObject,'Value')} returns selected item from PMFilter
+
+
+% --- Executes during object creation, after setting all properties.
+function PMFilter_CreateFcn(hObject, eventdata, handles)
+% hObject    handle to PMFilter (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    empty - handles not created until after all CreateFcns called
+
+% Hint: popupmenu controls usually have a white background on Windows.
+%       See ISPC and COMPUTER.
+if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
+    set(hObject,'BackgroundColor','white');
+end
+% set(handles.PMFilter,'Value',2);
+
+% --- Executes on slider movement.
+function slider3_Callback(hObject, eventdata, handles)
+% hObject    handle to slider3 (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+% Hints: get(hObject,'Value') returns position of slider
+%        get(hObject,'Min') and get(hObject,'Max') to determine range of slider
+
+
+% --- Executes during object creation, after setting all properties.
+function slider3_CreateFcn(hObject, eventdata, handles)
+% hObject    handle to slider3 (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    empty - handles not created until after all CreateFcns called
+
+% Hint: slider controls usually have a light gray background.
+if isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
+    set(hObject,'BackgroundColor',[.9 .9 .9]);
+end
+
+
+% --- Executes on button press in PBFilterPlus.
+function PBFilterPlus_Callback(hObject, eventdata, handles)
+% hObject    handle to PBFilterPlus (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+F=str2num(get(handles.FilterValue,'String'));
+F=F+1;
+set(handles.FilterValue,'String',num2str(F));
+
+
+
+% --- Executes on button press in PBFilterMinus.
+function PBFilterMinus_Callback(hObject, eventdata, handles)
+% hObject    handle to PBFilterMinus (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+F=str2num(get(handles.FilterValue,'String'));
+F=F-1;
+if F<0
+    F=0;
+end
+set(handles.FilterValue,'String',num2str(F));
+
+
+function FilterValue_Callback(hObject, eventdata, handles)
+% hObject    handle to FilterValue (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+% Hints: get(hObject,'String') returns contents of FilterValue as text
+%        str2double(get(hObject,'String')) returns contents of FilterValue as a double
+
+
+% --- Executes during object creation, after setting all properties.
+function FilterValue_CreateFcn(hObject, eventdata, handles)
+% hObject    handle to FilterValue (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    empty - handles not created until after all CreateFcns called
+
+% Hint: edit controls usually have a white background on Windows.
+%       See ISPC and COMPUTER.
+if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
+    set(hObject,'BackgroundColor','white');
+end
+global x Ex_flag In_flag sx sy xcentre ycentre f h_ex h_in h_ex2 h_in2...
+    num numNull xn h_image fftx fftx_shift f1 f2 fftx_shift_filter...
+    ha h_image_ha flag_fig pathname top_corrPI phi_ab_all aber_std...
+    a b c Zmso Z n x1 y1 num_calc Zost PathName tempSize sfigure0...
+    sfigure C0 F0 C F x_series temp_series flag_series xcorr1 xcorr2 table_series Z_series D_ex D_in
+% sy=size(xn,1);
+% sx=size(xn,2);
+% L=round((sy+sx)/2);
+% k=0.5;
+% F=L/(k*sqrt((2*f1)^2+(2*f2)^2));
+% set(handles.FilterValue,'String',num2str(F));
+
+
+
+% --- Executes on button press in PBFilter.
+function PBFilter_Callback(hObject, eventdata, handles)
+% hObject    handle to PBFilter (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+global x Ex_flag In_flag sx sy xcentre ycentre f h_ex h_in h_ex2 h_in2...
+    num numNull xn h_image fftx fftx_shift f1 f2 fftx_shift_filter...
+    ha h_image_ha flag_fig pathname top_corrPI phi_ab_all aber_std...
+    a b c Zmso Z n x1 y1 num_calc Zost PathName tempSize sfigure0...
+    sfigure C0 F0 C F x_series temp_series flag_series xcorr1 xcorr2 table_series Z_series D_ex D_in
+flagPMFilter=get(handles.PMFilter,'Value');
+index_filter=str2num(get(handles.FilterValue,'String'));
+
+if flagPMFilter==1              %Без фильтрации
+    fftx_shift_filter=WithoutFiltration(fftx_shift);
+end
+
+if flagPMFilter==2              %Гауссовская фильтрация
+    %вставить функцию с гауссовской фильтрацией
+    fftx_shift_filter=GausFiltration(fftx_shift,index_filter,flag_fig);
+end
+if flagPMFilter==3              %Прямоугольная фильтрация
+    %вставить функцию с прямоугольной фильтрацией
+    fftx_shift_filter=RectFiltration(fftx_shift,index_filter,flag_fig);
+end
+if flag_series==0 || temp_series==size(x_series,2)
+    ha=handles.axInterf;
+    axes(ha)
+    cla;
+    hold on    
+    afftx_shift_filter=abs(fftx_shift_filter);
+    imagesc(afftx_shift_filter/max(max(afftx_shift_filter)));
+    colormap('gray')
+    % axis equal
+    caxis([0 0.1])
+    % title('Fourier after filtration')
+end
+
+
+% --- Executes on button press in PBFourier.
+function PBFourier_Callback(hObject, eventdata, handles)
+% hObject    handle to PBFourier (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+global x Ex_flag In_flag sx sy xcentre ycentre f h_ex h_in h_ex2 h_in2...
+    num numNull xn h_image fftx fftx_shift f1 f2 fftx_shift_filter...
+    ha h_image_ha flag_fig pathname top_corrPI phi_ab_all aber_std...
+    a b c Zmso Z n x1 y1 num_calc Zost PathName tempSize sfigure0...
+    sfigure C0 F0 C F x_series temp_series flag_series xcorr1 xcorr2 table_series Z_series D_ex D_in
+%продолжить полосы дальше за края
+xn_izn=xn;
+xn=add_lines(xn);
+xn=(add_lines(xn'))';
+
+fftx=FourierTransform(xn,num,numNull);
+ay=abs(fftx);
+tic;
+if flag_fig==1
+    figure(2);
+    hold on
+    imagesc(ay/max(max(ay)));
+    colormap('gray');
+    axis([1 size(ay,2) 1 size(ay,1)])
+
+%     axis equal
+    caxis([0 1])
+%     title('Fourier Transform')
+end
+if flag_series==0 || temp_series==size(x_series,2)
+    ha=handles.axInterf;
+    axes(ha)
+    cla;
+    hold on
+    h_image_ha=imagesc(ay/max(max(ay)));
+    colormap('gray');
+    % axis equal
+    caxis([0 1])
+    % title('Fourier Transform')
+end
+
+% --- Executes on button press in PBFirstOrder.
+function PBFirstOrder_Callback(hObject, eventdata, handles)
+% hObject    handle to PBFirstOrder (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+global x Ex_flag In_flag sx sy xcentre ycentre f h_ex h_in h_ex2 h_in2...
+    num numNull xn h_image fftx fftx_shift f1 f2 fftx_shift_filter...
+    ha h_image_ha flag_fig pathname top_corrPI phi_ab_all aber_std...
+    a b c Zmso Z n x1 y1 num_calc Zost PathName tempSize sfigure0...
+    sfigure C0 F0 C F x_series temp_series flag_series xcorr1 xcorr2 table_series Z_series D_ex D_in
+[fftx_shift,f1,f2]=Calc_First_Order(fftx);
+afftx_shift=abs(fftx_shift);
+tic;
+if flag_fig==1
+    figure(3);
+    hold on
+    imagesc(afftx_shift/max(max(afftx_shift)));
+    colormap('gray');
+        axis([1 size(afftx_shift,2) 1 size(afftx_shift,1)])
+
+%     axis equal
+    caxis([0 1])
+%     title('Fourier Transform & displacement of 1-st order')
+end
+
+if flag_series==0 || temp_series==size(x_series,2)
+    ha=handles.axInterf;
+    axes(ha)
+    cla;
+    hold on
+    h_image_ha=imagesc(afftx_shift/max(max(afftx_shift)));
+    colormap('gray');
+    % axis equal
+    caxis([0 1])
+    % title('Fourier Transform & displacement of 1-st order')
+end
+sy=size(xn,1);
+sx=size(xn,2);
+L=round((sy+sx)/2);
+k=0.15;
+F=round(L/(k*sqrt((2*f1)^2+(2*f2)^2)));
+kk=get(handles.uitoggletool11,'State');
+if kk(1:2)=='of';
+    set(handles.FilterValue,'String',num2str(F));
+end
+
+
+% --- Executes on button press in pushbutton14.
+function PB_top_Callback(hObject, eventdata, handles)
+% hObject    handle to pushbutton14 (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+global x Ex_flag In_flag sx sy xcentre ycentre f h_ex h_in h_ex2 h_in2...
+    num numNull xn h_image fftx fftx_shift f1 f2 fftx_shift_filter...
+    ha h_image_ha flag_fig pathname top_corrPI phi_ab_all aber_std...
+    a b c Zmso Z n x1 y1 num_calc Zost PathName tempSize sfigure0...
+    sfigure C0 F0 C F x_series temp_series flag_series xcorr1 xcorr2 table_series Z_series D_ex D_in
+flagPMCoef=get(handles.coef_scheme,'Value');
+
+top_initial=calc_topogramma(fftx_shift_filter,numNull);
+top_corrPI=corr_pi(top_initial,numNull,num);
+top_corrPI=-top_corrPI/(2*pi);
+
+if flagPMCoef==1              %1 - волновой фронт
+    top_corrPI=top_corrPI;
+end
+
+if flagPMCoef==2              %2 - поверхность
+    top_corrPI=top_corrPI/2;
+end
+if flagPMCoef==3              %4 - поверхность в двойном проходе
+    top_corrPI=top_corrPI/4;
+end
+if flag_fig==1
+    figure(6);
+    hold on;
+    imagesc(top_corrPI);
+	axis([1 size(top_corrPI,2) 1 size(top_corrPI,1)])
+
+    colormap('gray');
+    xlabel('pix');
+    ylabel('pix');
+%     axis equal;
+%     title('Topogram');
+end
+if flag_series==0 || temp_series==size(x_series,2)
+    ha=handles.axInterf;
+    axes(ha)
+    cla;
+    hold off
+    hold on
+    h_image_ha=imagesc(top_corrPI);
+    caxis([min(top_corrPI(:)) max(top_corrPI(:))])
+    colormap('gray');
+    xlabel('pix');
+    ylabel('pix');
+end
+% axis equal;
+% title('Topogram');
+
+% --- Executes on button press in PB_aberr.
+function PB_aberr_Callback(hObject, eventdata, handles)
+% hObject    handle to PB_aberr (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+global x Ex_flag In_flag sx sy xcentre ycentre f h_ex h_in h_ex2 h_in2...
+    num numNull xn h_image fftx fftx_shift f1 f2 fftx_shift_filter...
+    ha h_image_ha flag_fig pathname top_corrPI phi_ab_all aber_std...
+    a b c Zmso Z n x1 y1 num_calc Zost PathName tempSize sfigure0...
+    sfigure C0 F0 C F x_series temp_series flag_series xcorr1 xcorr2 table_series Z_series D_ex D_in table
+
+flagdefocus=get(handles.defocus,'Value');
+flagkoma=get(handles.koma,'Value');
+flagastigmatizm=get(handles.astigmatizm,'Value');
+flagthreelist=get(handles.threelist,'Value');
+flagsphera=get(handles.sphera,'Value');
+flagmso=get(handles.mso,'Value');
+
+flagall=[1 1 1 flagdefocus flagastigmatizm flagastigmatizm flagkoma flagkoma flagthreelist flagthreelist flagsphera];
+
+
+Z=top_corrPI;
+% figure(1001)
+% imagesc(Z);
+% colormap('gray')
+% axis equal
+
+
+min_A=-2;           %в длинах волн
+max_A=2;
+dA=1/100;
+
+n=1:11;
+sn=size(n,2);
+S=zeros(1,sn);
+% Z(num)=Z(num)-(mean(Z(num)));
+phi_ab_all=zeros(size(Z,1),size(Z,2),sn);
+
+Zizn=Z;
+Zmso=Z;
+Zost=Z;
+%считаем аберрации
+for i=n;
+%     if i==2 || i==3
+%         [A,phi_ab]=poli_corr9(Zmso,i,-5,5,dA,num);
+%     else
+%         [A,phi_ab]=poli_corr9(Zmso,i,min_A,max_A,dA,num);
+%     end
+%     if i==2 || i==3
+        [A,phi_ab]=poli_corr10(Zmso,i,num);
+%     else
+%         [A,phi_ab]=poli_corr9(Zmso,i,min_A,max_A,dA,num);
+%     end
+    phi_ab_all(:,:,i)=phi_ab;
+    aber_std(i)=std(phi_ab(num));
+    Zmso=Zmso-phi_ab;
+end
+%вычитаем аберрации
+for i=n;
+    if flagall(i)==1
+        Zost=Zost-phi_ab_all(:,:,i);
+    end
+end
+if flagmso==1
+    Zost=Zost-Zmso;
+end
+Zost(num)=Zost(num)-(mean(Zost(num)));
+std_Z_ost=std(Zost(num));
+Zost(numNull)=NaN;
+
+Zmso(num)=Zmso(num)-(mean(Zmso(num)));
+std_Z_mso=std(Zmso(num));
+Zmso(numNull)=NaN;
+
+% Z_corr=Z;
+% Z_corr(numNull)=0;
+% figure(1001)
+% % imagesc(Z_corr)
+% mesh(Z_corr)
+% sy=size(Z,1);
+% sx=size(Z,2);
+x1=meshgrid(1:sx,1:sy);
+y1=meshgrid(1:sy,1:sx)';
+R=round((max(max(y1(num))-min(y1(num)),(max(x1(num))-min(x1(num)))))/2);
+x0=round((max((x1(num))+min(x1(num)))/2));
+y0=round((max((y1(num))+min(y1(num)))/2));
+x2=x1-x0;
+y2=y1-y0;
+x2=x2/R;
+y2=y2/R;
+% Z_corr(numNull)=NaN;
+% figure(1002)
+% surf(x1,y1,Zost)
+% colormap('jet')
+% shading(gca,'interp')
+
+
+if flag_fig==1
+    figure(7);
+    hold on;
+    imagesc(Zost);    
+    axis equal
+    colormap('jet');
+    caxis([min(Zost(:)) max(Zost(:))])
+	axis([1 size(Zost,2) 1 size(Zost,1)])
+    colorbar;
+    xlabel('pix');
+    ylabel('pix');
+%     title('Аберрации');
+end
+if flag_series==0 || temp_series==size(x_series,2)
+    ha=handles.axInterf;
+    axes(ha)
+    cla;
+    h_image_ha=surf(x1,y1,Zost);
+    colormap('jet')
+    shading(gca,'interp')
+    colorbar;
+    axis([1 sx 1 sy min(Zost(:)) max(Zost(:))]);
+    grid on
+    caxis([min(Zost(:)) max(Zost(:))]);
+    view([1 1 4*max(Zost(:))]);
+
+    xlabel('pix');
+    ylabel('pix');
+end
+% set(handles.axInterf,'ALim',[0 0.002])
+% title(['After Aberration Correction std = ' num2str(std_Z) ' = liamda/' num2str(round(1/std_Z))]);
+
+
+
+a(1)=round(1000*aber_std(4))/1000;
+% set(handles.txt_defocus,'String',[num2str(a) '= ' {'\lambda'} '/' num2str(round(1/a))])
+
+a(2)=round(1000*sqrt(aber_std(7)^2+aber_std(8)^2))/1000;
+% set(handles.txt_koma,'String',[num2str(a) '= \lambda /' num2str(round(1/a))])
+
+a(3)=round(1000*sqrt(aber_std(5)^2+aber_std(6)^2))/1000;
+% set(handles.txt_astigm,'String',[num2str(a) '= \lambda /' num2str(round(1/a))])
+
+
+a(4)=round(1000*sqrt(aber_std(9)^2+aber_std(10)^2))/1000;
+% set(handles.txt_threelist,'String',[num2str(a) '= \lambda /' num2str(round(1/a))])
+
+a(5)=round(1000*aber_std(11))/1000;
+% set(handles.txt_spheric,'String',[num2str(a) '= ' '\lambda' '/' num2str(round(1/a))])
+a(6)=std_Z_mso;
+a(7)=std_Z_ost;
+% aber_std(n)
+% dispersion_sum=sum(aber_std(5:11).^2)+std_Z_mso^2;           %выше дефокусировки
+% a_sum=round(1000*std(Zsum(num)))/1000;
+
+b=round(1./a);
+asum=sum(a(1:6));
+c=a./asum;
+c(7)=1-(sum(c(1:6).*[flagdefocus flagkoma flagastigmatizm flagthreelist flagsphera flagmso]));
+% c=round(100*(a.^2)./sum(a(1:6).^2));
+% c=round(100*sqrt((a.^2)./dispersion_sum));
+% c(7)=100-(sum(a(1:6).*[flagdefocus flagkoma flagastigmatizm flagthreelist flagsphera flagmso]));
+table=[a' b' (round(100*c))'];
+set(handles.uitable1,'Data',table);
+% set(handles.txt_defocus,'String',('?'))
+title(['\lambda'])
+if flag_series==1
+    Z_series(:,:,temp_series)=Zost;
+    table_series(:,:,temp_series)=table;
+    ha=handles.axInterf;
+    axes(ha)
+    title(['frame ' num2str(temp_series) '(' num2str(size(x_series,2)) ')']);
+    temp_series
+    pause(1);
+    if temp_series<size(x_series,2);
+        temp_series=temp_series+1;
+        x=x_series{1,temp_series};
+        x=x(end:-1:1,:,1);
+        x=x';
+        exist xcorr1;
+        if ans==1 && length(xcorr1)~=0
+            x=x-xcorr1.*(x-31)/max(max(x-31));
+        end
+        exist xcorr2;
+        if ans==1 && length(xcorr2)~=0
+            x=x-xcorr2.*(x-31)/max(max(x-31));
+        end
+        pbAuto_Callback(hObject, eventdata, handles);
+    else
+        save('result_of_series.mat','Z_series','temp_series');
+    end
+end
+
+% % --- Executes on button press in pushbutton12.
+% function pushbutton12_Callback(hObject, eventdata, handles)
+% % hObject    handle to pushbutton12 (see GCBO)
+% % eventdata  reserved - to be defined in a future version of MATLAB
+% % handles    structure with handles and user data (see GUIDATA)
+
+
+
+% --- Executes when figure1 is resized.
+function figure1_SizeChangedFcn(hObject, eventdata, handles)
+% hObject    handle to figure1 (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+global x Ex_flag In_flag sx sy xcentre ycentre f h_ex h_in h_ex2 h_in2...
+    num numNull xn h_image fftx fftx_shift f1 f2 fftx_shift_filter...
+    ha h_image_ha flag_fig pathname top_corrPI phi_ab_all aber_std...
+    a b c Zmso Z n x1 y1 num_calc Zost PathName tempSize sfigure0...
+    sfigure C0 F0 C F x_series temp_series flag_series xcorr1 xcorr2 table_series Z_series D_ex D_in
+% if tempSize==1
+%     111
+%     sfigure0=get(handles.figure1,'Position');
+% %     stable0=get(handles.uitable1,'Position');    
+%     C0=cell2mat(get(handles.uitable1,'ColumnWidth'))
+%     F0=get(handles.uitable1,'FontSize')
+% 
+% %     stable=stable0;
+% else
+%     222
+%     sfigure=get(handles.figure1,'Position');
+%     F=F0*(sfigure(4)/sfigure0(4)+0.15*(sfigure(4)/sfigure0(4)-1));
+%     C=num2cell(round(C0*(sfigure(3)/sfigure0(3)+0.62*(sfigure(3)/sfigure0(3)-1))));
+%     set(handles.uitable1,'FontSize',F)
+%     set(handles.uitable1,'ColumnWidth',C)
+% %     stable(3)=stable0(3)*sfigure(3)/sfigure0(3);
+% %     stable(4)=stable0(4)*sfigure(4)/sfigure0(4);
+% % 	set(handles.uitable1,'Position',stable);
+% end
+% % 	sss=get(handles.uitable1,'Position');
+% %     get(handles.uitable1,'Extent')
+% 
+% tempSize=tempSize+1;
+
+% 123131;
+
+% s(3);
+% --------------------------------------------------------------------
+function uitoggletool9_OnCallback(hObject, eventdata, handles)
+% hObject    handle to uitoggletool9 (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+global x Ex_flag In_flag sx sy xcentre ycentre f h_ex h_in h_ex2 h_in2...
+    num numNull xn h_image fftx fftx_shift f1 f2 fftx_shift_filter...
+    ha h_image_ha flag_fig pathname top_corrPI phi_ab_all aber_std...
+    a b c Zmso Z n x1 y1 num_calc Zost PathName tempSize sfigure0...
+    sfigure C0 F0 C F x_series temp_series flag_series xcorr1 xcorr2 table_series Z_series D_ex D_in
+
+flag_fig=1;         %1 - выводятся фигуры, 0 - нет
+
+
+% --------------------------------------------------------------------
+function uitoggletool9_OffCallback(hObject, eventdata, handles)
+% hObject    handle to uitoggletool9 (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+global x Ex_flag In_flag sx sy xcentre ycentre f h_ex h_in h_ex2 h_in2...
+    num numNull xn h_image fftx fftx_shift f1 f2 fftx_shift_filter...
+    ha h_image_ha flag_fig pathname top_corrPI phi_ab_all aber_std...
+    a b c Zmso Z n x1 y1 num_calc Zost PathName tempSize sfigure0...
+    sfigure C0 F0 C F x_series temp_series flag_series xcorr1 xcorr2 table_series Z_series D_ex D_in
+flag_fig=0;         %1 - выводятся фигуры, 0 - нет
+
+
+% --------------------------------------------------------------------
+function uipushtool5_ClickedCallback(hObject, eventdata, handles)
+% hObject    handle to uipushtool5 (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+global x Ex_flag In_flag sx sy xcentre ycentre f h_ex h_in h_ex2 h_in2...
+    num numNull xn h_image fftx fftx_shift f1 f2 fftx_shift_filter...
+    ha h_image_ha flag_fig pathname top_corrPI phi_ab_all aber_std...
+    a b c Zmso Z n x1 y1 num_calc Zost PathName tempSize sfigure0...
+    sfigure C0 F0 C F x_series temp_series flag_series xcorr1 xcorr2 table_series Z_series D_ex D_in table
+file=uiputfile;
+    if max(file(end-3:end)~='.mat')
+        file(end-3:end)='.mat';
+    end
+W=Zost;
+save(file,'x','W','table');
+
+
+
+% --------------------------------------------------------------------
+function uipushtool2_ClickedCallback(hObject, eventdata, handles)
+% hObject    handle to uipushtool2 (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+global x Ex_flag In_flag sx sy xcentre ycentre f h_ex h_in h_ex2 h_in2...
+    num numNull xn h_image fftx fftx_shift f1 f2 fftx_shift_filter...
+    ha h_image_ha flag_fig pathname top_corrPI phi_ab_all aber_std...
+    a b c Zmso Z n x1 y1 num_calc Zost PathName tempSize sfigure0...
+    sfigure C0 F0 C F x_series temp_series flag_series xcorr1 xcorr2 table_series Z_series D_ex D_in
+hGUIFOR=handles.figure1;
+saveas(hGUIFOR,[pathname(1:end-4) '_GUIFOUR'],'fig');
+saveas(hGUIFOR,[pathname(1:end-4) '_GUIFOUR'],'jpg');
+
+
+% --- Executes on button press in koma.
+function koma_Callback(hObject, eventdata, handles)
+% hObject    handle to koma (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+% Hint: get(hObject,'Value') returns toggle state of koma
+defocus_Callback(hObject, eventdata, handles)
+
+% --- Executes on button press in astigmatizm.
+function astigmatizm_Callback(hObject, eventdata, handles)
+% hObject    handle to astigmatizm (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+% Hint: get(hObject,'Value') returns toggle state of astigmatizm
+defocus_Callback(hObject, eventdata, handles)
+
+% --- Executes on button press in defocus.
+function defocus_Callback(hObject, eventdata, handles)
+% hObject    handle to defocus (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+global x Ex_flag In_flag sx sy xcentre ycentre f h_ex h_in h_ex2 h_in2...
+    num numNull xn h_image fftx fftx_shift f1 f2 fftx_shift_filter...
+    ha h_image_ha flag_fig pathname top_corrPI phi_ab_all aber_std...
+    a b c Zmso Z n x1 y1 num_calc Zost PathName tempSize sfigure0...
+    sfigure C0 F0 C F x_series temp_series flag_series xcorr1 xcorr2 table_series Z_series D_ex D_in
+
+flagdefocus=get(handles.defocus,'Value');
+flagkoma=get(handles.koma,'Value');
+flagastigmatizm=get(handles.astigmatizm,'Value');
+flagthreelist=get(handles.threelist,'Value');
+flagsphera=get(handles.sphera,'Value');
+flagmso=get(handles.mso,'Value');
+
+flagall=[1 1 1 flagdefocus flagastigmatizm flagastigmatizm flagkoma flagkoma flagthreelist flagthreelist flagsphera];
+
+
+Zost=Z;
+%вычитаем аберрации
+for i=n;
+    if flagall(i)==1
+        Zost=Zost-phi_ab_all(:,:,i);
+    end
+end
+if flagmso==1
+    Zost=Zost-Zmso;
+end
+Zost(num)=Zost(num)-(mean(Zost(num)));
+std_Z_ost=std(Zost(num));
+Zost(numNull)=NaN;
+
+Zmso(num)=Zmso(num)-(mean(Zmso(num)));
+std_Z_mso=std(Zmso(num));
+Zmso(numNull)=NaN;
+
+
+if flag_fig==1
+    figure(7);
+    hold on;
+    imagesc(Zost);
+    axis equal
+    colormap('jet');
+    caxis([min(Zost(:)) max(Zost(:))])
+	axis([1 size(Zost,2) 1 size(Zost,1)])
+    colorbar;
+    xlabel('pix');
+    ylabel('pix');
+%     title('Аберрации');
+end
+ha=handles.axInterf;
+axes(ha)
+cla;
+h_image_ha=surf(x1,y1,Zost);
+% h_image_ha=surf(Zost);
+colormap('jet')
+shading(gca,'interp')
+colorbar;
+axis([1 sx 1 sy min(Zost(:)) max(Zost(:))])
+grid on
+caxis([min(Zost(:)) max(Zost(:))])
+view([1 1 4*max(Zost(:))])
+a(7)=std_Z_ost;
+b=round(1./a);
+asum=sum(a(1:6));
+c=a./asum;
+c(7)=1-(sum(c(1:6).*[flagdefocus flagkoma flagastigmatizm flagthreelist flagsphera flagmso]));
+table=[a' b' (round(100*c))'];
+set(handles.uitable1,'Data',table);
+title(['\lambda'])
+xlabel('pix');
+ylabel('pix');
+
+% --- Executes on button press in threelist.
+function threelist_Callback(hObject, eventdata, handles)
+% hObject    handle to threelist (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+% Hint: get(hObject,'Value') returns toggle state of threelist
+defocus_Callback(hObject, eventdata, handles)
+
+% --- Executes on button press in sphera.
+function sphera_Callback(hObject, eventdata, handles)
+% hObject    handle to sphera (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+% Hint: get(hObject,'Value') returns toggle state of sphera
+defocus_Callback(hObject, eventdata, handles)
+
+
+function defoc_txt_Callback(hObject, eventdata, handles)
+% hObject    handle to defoc_txt (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+
+% Hints: get(hObject,'String') returns contents of defoc_txt as text
+%        str2double(get(hObject,'String')) returns contents of defoc_txt as a double
+
+
+% --- Executes during object creation, after setting all properties.
+function defoc_txt_CreateFcn(hObject, eventdata, handles)
+% hObject    handle to defoc_txt (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    empty - handles not created until after all CreateFcns called
+
+% Hint: edit controls usually have a white background on Windows.
+%       See ISPC and COMPUTER.
+if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
+    set(hObject,'BackgroundColor','white');
+end
+
+
+% --- Executes on selection change in coef_scheme.
+function coef_scheme_Callback(hObject, eventdata, handles)
+% hObject    handle to coef_scheme (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+% Hints: contents = cellstr(get(hObject,'String')) returns coef_scheme contents as cell array
+%        contents{get(hObject,'Value')} returns selected item from coef_scheme
+
+
+% --- Executes during object creation, after setting all properties.
+function coef_scheme_CreateFcn(hObject, eventdata, handles)
+% hObject    handle to coef_scheme (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    empty - handles not created until after all CreateFcns called
+
+% Hint: popupmenu controls usually have a white background on Windows.
+%       See ISPC and COMPUTER.
+if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
+    set(hObject,'BackgroundColor','white');
+end
+
+
+% --- Executes on button press in mso.
+function mso_Callback(hObject, eventdata, handles)
+% hObject    handle to mso (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+% Hint: get(hObject,'Value') returns toggle state of mso
+defocus_Callback(hObject, eventdata, handles)
+% 41241
+% get(handles.uitable1)
+% --- Executes on button press in pbAuto.
+function pbAuto_Callback(hObject, eventdata, handles)
+% hObject    handle to pbAuto (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+Cut_Callback(hObject, eventdata, handles);
+
+PBFourier_Callback(hObject, eventdata, handles);
+% pause(0.5);
+PBFirstOrder_Callback(hObject, eventdata, handles);
+% pause(0.5);
+PBFilter_Callback(hObject, eventdata, handles);
+% pause(0.5);
+PB_top_Callback(hObject, eventdata, handles);
+% pause(0.5);
+PB_aberr_Callback(hObject, eventdata, handles);
+
+
+% --- Executes on button press in pushbutton14.
+function pushbutton14_Callback(hObject, eventdata, handles)
+%Вверх
+% hObject    handle to pushbutton14 (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+global x Ex_flag In_flag sx sy xcentre ycentre f h_ex h_in h_ex2 h_in2...
+    num numNull xn h_image fftx fftx_shift f1 f2 fftx_shift_filter...
+    ha h_image_ha flag_fig pathname top_corrPI phi_ab_all aber_std...
+    a b c Zmso Z n x1 y1 num_calc Zost PathName tempSize sfigure0...
+    sfigure C0 F0 C F x_series temp_series flag_series xcorr1 xcorr2 table_series Z_series D_ex D_in
+% figure(1);
+% ha=handles.axInterf;
+% axes(ha)
+% [xcentre,ycentre] = ginput(1);
+% xcentre=;
+ycentre=round(1.01*ycentre);
+Ex_flag=get(handles.Ex_Ap,'Value');
+if Ex_flag==1
+    D_ex=round(get(handles.slider_Ex,'Value'));
+
+%     hold on
+%     h_ex=plot([xEx xEx -xEx -xEx]+xcentre,[yEx -yEx -yEx +yEx]+ycentre,'r-')
+%     set(h_ex,'YData',[yEx yEx -yEx -yEx zeros(1,61) -30:30]+ycentre);
+%     set(h_ex,'XData',[xEx -xEx -xEx xEx -30:30 zeros(1,61)]+xcentre);
+
+    yEx=D_ex/2*sind(f);
+    xEx=D_ex/2*cosd(f);
+%     h_ex=plot([xEx -xEx -xEx xEx -30:30 zeros(1,61)]+xcentre,[yEx yEx -yEx -yEx zeros(1,61) -30:30]+ycentre,'r.')
+	if flag_fig==1
+        figure(1)
+        set(h_ex,'YData',[yEx yEx -yEx -yEx zeros(1,61) -30:30]+ycentre);
+        set(h_ex,'XData',[xEx -xEx -xEx xEx -30:30 zeros(1,61)]+xcentre);
+        set(h_ex,'MarkerSize',10)
+    end
+    set(h_ex2,'YData',[yEx yEx -yEx -yEx zeros(1,61) -30:30]+ycentre);
+    set(h_ex2,'XData',[xEx -xEx -xEx xEx -30:30 zeros(1,61)]+xcentre);
+    set(h_ex2,'MarkerSize',10)
+end
+In_flag=get(handles.In_Ap,'Value');
+if In_flag==1
+    D_in=round(get(handles.slider_In,'Value'));
+    yIn=D_in/2*sind(f);
+    xIn=D_in/2*cosd(f);
+	if flag_fig==1
+        figure(1)
+        hold on
+    %     h_in=plot([xIn -xIn -xIn xIn]+xcentre,[yIn yIn -yIn -yIn]+ycentre,'g.')
+        set(h_in,'YData',[yIn yIn -yIn -yIn]+ycentre);
+        set(h_in,'XData',[xIn -xIn -xIn xIn]+xcentre);
+        set(h_in,'MarkerSize',10);
+    end
+    set(h_in2,'YData',[yIn yIn -yIn -yIn]+ycentre);
+    set(h_in2,'XData',[xIn -xIn -xIn xIn]+xcentre);
+    set(h_in2,'MarkerSize',10);
+end
+
+% --- Executes on button press in pushbutton15.
+function pushbutton15_Callback(hObject, eventdata, handles)
+%Вниз
+% hObject    handle to pushbutton15 (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+global x Ex_flag In_flag sx sy xcentre ycentre f h_ex h_in h_ex2 h_in2...
+    num numNull xn h_image fftx fftx_shift f1 f2 fftx_shift_filter...
+    ha h_image_ha flag_fig pathname top_corrPI phi_ab_all aber_std...
+    a b c Zmso Z n x1 y1 num_calc Zost PathName tempSize sfigure0...
+    sfigure C0 F0 C F x_series temp_series flag_series xcorr1 xcorr2 table_series Z_series D_ex D_in
+
+ycentre=round(0.99*ycentre);
+Ex_flag=get(handles.Ex_Ap,'Value');
+if Ex_flag==1
+    D_ex=round(get(handles.slider_Ex,'Value'));
+
+%     hold on
+%     h_ex=plot([xEx xEx -xEx -xEx]+xcentre,[yEx -yEx -yEx +yEx]+ycentre,'r-')
+%     set(h_ex,'YData',[yEx yEx -yEx -yEx zeros(1,61) -30:30]+ycentre);
+%     set(h_ex,'XData',[xEx -xEx -xEx xEx -30:30 zeros(1,61)]+xcentre);
+
+    yEx=D_ex/2*sind(f);
+    xEx=D_ex/2*cosd(f);
+%     h_ex=plot([xEx -xEx -xEx xEx -30:30 zeros(1,61)]+xcentre,[yEx yEx -yEx -yEx zeros(1,61) -30:30]+ycentre,'r.')
+	if flag_fig==1
+        figure(1)
+        set(h_ex,'YData',[yEx yEx -yEx -yEx zeros(1,61) -30:30]+ycentre);
+        set(h_ex,'XData',[xEx -xEx -xEx xEx -30:30 zeros(1,61)]+xcentre);
+        set(h_ex,'MarkerSize',10)
+    end
+    set(h_ex2,'YData',[yEx yEx -yEx -yEx zeros(1,61) -30:30]+ycentre);
+    set(h_ex2,'XData',[xEx -xEx -xEx xEx -30:30 zeros(1,61)]+xcentre);
+    set(h_ex2,'MarkerSize',10)
+end
+In_flag=get(handles.In_Ap,'Value');
+if In_flag==1
+    D_in=round(get(handles.slider_In,'Value'));
+    yIn=D_in/2*sind(f);
+    xIn=D_in/2*cosd(f);
+	if flag_fig==1
+        figure(1)
+        hold on
+    %     h_in=plot([xIn -xIn -xIn xIn]+xcentre,[yIn yIn -yIn -yIn]+ycentre,'g.')
+        set(h_in,'YData',[yIn yIn -yIn -yIn]+ycentre);
+        set(h_in,'XData',[xIn -xIn -xIn xIn]+xcentre);
+        set(h_in,'MarkerSize',10);
+    end
+    set(h_in2,'YData',[yIn yIn -yIn -yIn]+ycentre);
+    set(h_in2,'XData',[xIn -xIn -xIn xIn]+xcentre);
+    set(h_in2,'MarkerSize',10);
+end
+
+% --- Executes on button press in pushbutton16.
+function pushbutton16_Callback(hObject, eventdata, handles)
+%Влево
+% hObject    handle to pushbutton16 (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+global x Ex_flag In_flag sx sy xcentre ycentre f h_ex h_in h_ex2 h_in2...
+    num numNull xn h_image fftx fftx_shift f1 f2 fftx_shift_filter...
+    ha h_image_ha flag_fig pathname top_corrPI phi_ab_all aber_std...
+    a b c Zmso Z n x1 y1 num_calc Zost PathName tempSize sfigure0...
+    sfigure C0 F0 C F x_series temp_series flag_series xcorr1 xcorr2 table_series Z_series D_ex D_in
+
+xcentre=round(0.99*xcentre);
+Ex_flag=get(handles.Ex_Ap,'Value');
+if Ex_flag==1
+    D_ex=round(get(handles.slider_Ex,'Value'));
+
+%     hold on
+%     h_ex=plot([xEx xEx -xEx -xEx]+xcentre,[yEx -yEx -yEx +yEx]+ycentre,'r-')
+%     set(h_ex,'YData',[yEx yEx -yEx -yEx zeros(1,61) -30:30]+ycentre);
+%     set(h_ex,'XData',[xEx -xEx -xEx xEx -30:30 zeros(1,61)]+xcentre);
+
+    yEx=D_ex/2*sind(f);
+    xEx=D_ex/2*cosd(f);
+%     h_ex=plot([xEx -xEx -xEx xEx -30:30 zeros(1,61)]+xcentre,[yEx yEx -yEx -yEx zeros(1,61) -30:30]+ycentre,'r.')
+	if flag_fig==1
+        figure(1)
+        set(h_ex,'YData',[yEx yEx -yEx -yEx zeros(1,61) -30:30]+ycentre);
+        set(h_ex,'XData',[xEx -xEx -xEx xEx -30:30 zeros(1,61)]+xcentre);
+        set(h_ex,'MarkerSize',10)
+    end
+    set(h_ex2,'YData',[yEx yEx -yEx -yEx zeros(1,61) -30:30]+ycentre);
+    set(h_ex2,'XData',[xEx -xEx -xEx xEx -30:30 zeros(1,61)]+xcentre);
+    set(h_ex2,'MarkerSize',10)
+end
+In_flag=get(handles.In_Ap,'Value');
+if In_flag==1
+    D_in=round(get(handles.slider_In,'Value'));
+    yIn=D_in/2*sind(f);
+    xIn=D_in/2*cosd(f);
+	if flag_fig==1
+        figure(1)
+        hold on
+    %     h_in=plot([xIn -xIn -xIn xIn]+xcentre,[yIn yIn -yIn -yIn]+ycentre,'g.')
+        set(h_in,'YData',[yIn yIn -yIn -yIn]+ycentre);
+        set(h_in,'XData',[xIn -xIn -xIn xIn]+xcentre);
+        set(h_in,'MarkerSize',10);
+    end
+    set(h_in2,'YData',[yIn yIn -yIn -yIn]+ycentre);
+    set(h_in2,'XData',[xIn -xIn -xIn xIn]+xcentre);
+    set(h_in2,'MarkerSize',10);
+end
+
+% --- Executes on button press in pushbutton17.
+function pushbutton17_Callback(hObject, eventdata, handles)
+%Вправо
+% hObject    handle to pushbutton17 (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+global x Ex_flag In_flag sx sy xcentre ycentre f h_ex h_in h_ex2 h_in2...
+    num numNull xn h_image fftx fftx_shift f1 f2 fftx_shift_filter...
+    ha h_image_ha flag_fig pathname top_corrPI phi_ab_all aber_std...
+    a b c Zmso Z n x1 y1 num_calc Zost PathName tempSize sfigure0...
+    sfigure C0 F0 C F x_series temp_series flag_series xcorr1 xcorr2 table_series Z_series D_ex D_in
+
+xcentre=round(1.01*xcentre);
+Ex_flag=get(handles.Ex_Ap,'Value');
+if Ex_flag==1
+    D_ex=round(get(handles.slider_Ex,'Value'));
+
+%     hold on
+%     h_ex=plot([xEx xEx -xEx -xEx]+xcentre,[yEx -yEx -yEx +yEx]+ycentre,'r-')
+%     set(h_ex,'YData',[yEx yEx -yEx -yEx zeros(1,61) -30:30]+ycentre);
+%     set(h_ex,'XData',[xEx -xEx -xEx xEx -30:30 zeros(1,61)]+xcentre);
+
+    yEx=D_ex/2*sind(f);
+    xEx=D_ex/2*cosd(f);
+%     h_ex=plot([xEx -xEx -xEx xEx -30:30 zeros(1,61)]+xcentre,[yEx yEx -yEx -yEx zeros(1,61) -30:30]+ycentre,'r.')
+	if flag_fig==1
+        figure(1)
+        set(h_ex,'YData',[yEx yEx -yEx -yEx zeros(1,61) -30:30]+ycentre);
+        set(h_ex,'XData',[xEx -xEx -xEx xEx -30:30 zeros(1,61)]+xcentre);
+        set(h_ex,'MarkerSize',10)
+    end
+    set(h_ex2,'YData',[yEx yEx -yEx -yEx zeros(1,61) -30:30]+ycentre);
+    set(h_ex2,'XData',[xEx -xEx -xEx xEx -30:30 zeros(1,61)]+xcentre);
+    set(h_ex2,'MarkerSize',10)
+end
+In_flag=get(handles.In_Ap,'Value');
+if In_flag==1
+    D_in=round(get(handles.slider_In,'Value'));
+    yIn=D_in/2*sind(f);
+    xIn=D_in/2*cosd(f);
+	if flag_fig==1
+        figure(1)
+        hold on
+    %     h_in=plot([xIn -xIn -xIn xIn]+xcentre,[yIn yIn -yIn -yIn]+ycentre,'g.')
+        set(h_in,'YData',[yIn yIn -yIn -yIn]+ycentre);
+        set(h_in,'XData',[xIn -xIn -xIn xIn]+xcentre);
+        set(h_in,'MarkerSize',10);
+    end
+    set(h_in2,'YData',[yIn yIn -yIn -yIn]+ycentre);
+    set(h_in2,'XData',[xIn -xIn -xIn xIn]+xcentre);
+    set(h_in2,'MarkerSize',10);
+end
+
+
+% --------------------------------------------------------------------
+function uipushtool6_ClickedCallback(hObject, eventdata, handles)
+% hObject    handle to uipushtool6 (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+global x Ex_flag In_flag sx sy xcentre ycentre f h_ex h_in h_ex2 h_in2...
+    num numNull xn h_image fftx fftx_shift f1 f2 fftx_shift_filter...
+    ha h_image_ha flag_fig pathname top_corrPI phi_ab_all aber_std...
+    a b c Zmso Z n x1 y1 num_calc Zost PathName tempSize sfigure0...
+    sfigure C0 F0 C F x_series temp_series flag_series xcorr1 xcorr2 table_series Z_series D_ex D_in
+[FileName, PathName]=uigetfile({'*.jpg;*.tif;*.png;*.bmp;*.tiff;*.mat','All Image Files';'*.*','All Files' },'Выберите фон',[PathName]);
+set(handles.txt_path,'String',[PathName,FileName]);
+pathname=[PathName,FileName];
+[pathstr,name,ext]=fileparts([PathName,'\',FileName]);
+
+if ext=='.mat'
+    xn=x;
+    load([PathName,'\',FileName]);
+    exist xx;
+	if ans==1
+        x=xx{1,1};
+        x=x';
+    end
+    xcorr1=x;x=xn;
+else
+        xcorr1=imread([PathName,'\',FileName]);
+end
+xcorr1=xcorr1(end:-1:1,:,1);
+xcorr1=double(xcorr1);
+x=x-xcorr1.*(x-31)/max(max(x-31));
+% x=x-mean(mean(x));
+
+cla;
+hold on
+h_image_ha=imagesc(x);
+colormap('gray')
+colorbar;
+axis([1 size(x,2) 1 size(x,1)]);
+caxis([min(x(:)) max(x(:))]);
+view([0 0 1]);
+colorbar;
+xlabel('pix');
+ylabel('pix');
+% --------------------------------------------------------------------
+function uipushtool7_ClickedCallback(hObject, eventdata, handles)
+% hObject    handle to uipushtool7 (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+global x Ex_flag In_flag sx sy xcentre ycentre f h_ex h_in h_ex2 h_in2...
+    num numNull xn h_image fftx fftx_shift f1 f2 fftx_shift_filter...
+    ha h_image_ha flag_fig pathname top_corrPI phi_ab_all aber_std...
+    a b c Zmso Z n x1 y1 num_calc Zost PathName tempSize sfigure0...
+    sfigure C0 F0 C F x_series temp_series flag_series xcorr1 xcorr2 table_series Z_series D_ex D_in
+[FileName, PathName]=uigetfile({'*.jpg;*.tif;*.png;*.bmp;*.tiff;*.mat','All Image Files';'*.*','All Files' },'Выберите фон',[PathName]);
+set(handles.txt_path,'String',[PathName,FileName]);
+pathname=[PathName,FileName];
+[pathstr,name,ext]=fileparts([PathName,'\',FileName]);
+if ext=='.mat'
+    xn=x;
+    load([PathName,'\',FileName]);
+    exist xx;
+	if ans==1
+        x=xx{1,1};
+        x=x';
+    end
+    xcorr2=x;x=xn;
+
+else
+        xcorr2=imread([PathName,'\',FileName]);
+end
+
+xcorr2=xcorr2(end:-1:1,:,1);
+xcorr2=double(xcorr2);
+x=x-xcorr2.*(x-31)/max(max(x-31));
+% x=x-mean(mean(x));
+
+cla;
+hold on
+h_image_ha=imagesc(x);
+colormap('gray')
+colorbar;
+axis([1 size(x,2) 1 size(x,1)]);
+caxis([min(x(:)) max(x(:))]);
+view([0 0 1]);
+colorbar;
+xlabel('pix');
+ylabel('pix');
