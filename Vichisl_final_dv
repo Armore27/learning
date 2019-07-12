@@ -1,0 +1,7 @@
+function [final_dv] = Vichisl_final_dv(dv_num, koef_all)
+numa= find(koef_all(:, 1) == min(koef_all(:, 1)));
+a=abs(dv_num(numa));
+numb=find(a == min(a));
+numb=numb(1);
+final_dv=dv_num(numa(numb));
+f=koef_all(numa,1);
