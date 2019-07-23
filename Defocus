@@ -1,18 +1,34 @@
-GUIFOUR;
-pause(10);
-load('a.ml.mat', 'table');
-koef = (table(:,1))';
-koef_all = [];
-dv_num = [1:5];
-for i = 1:5
-    %подвинуть (i-ый) движок на 1 шаг
-    GUIFOUR;
-    load('a.ml.mat', 'table');
-    koef = (table(:,1))';
-    koef_all = [koef_all; koef];
-    %отодвинуть (i-ый) движок обратно на 1 шаг
+[k_first] = Obrab_first;
+all_koef = [];
+dv_num = [1:6];
+for i = 1:6
+    if i == 1
+        gor1(g1+50);
+        [k_n] = Obrabotka;
+    end
+    if i == 2
+        ver1(g1+50);
+        [k_n] = Obrabotka;
+    end
+    if i == 3
+        sdg1(g1+50);
+        [k_n] = Obrabotka;
+    end
+    if i == 4
+        sdv1(g1+50);
+        [k_n] = Obrabotka;
+    end
+    if i == 5
+        os1(g1+50);
+        [k_n] = Obrabotka;
+    end
+    if i == 6
+        vra1(g1+50);
+        [k_n] = Obrabotka;
+    end
+    all_koef = [all_koef; k_n];
 end
-[final_dv] = Vichisl_final_dv(dv_num, koef_all);
+[final_dv] = Vichisl_final_dv(dv_num, all_koef);
 if koef_all(final_dv, 1) ~= 0.02
 %двигать выбранный движок до тех пор, пока коэффициент не будет равен 0.02
 end
