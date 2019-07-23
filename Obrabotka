@@ -1,0 +1,7 @@
+function [k_n] = Obrabotka
+WGopen;
+WGGP;
+[ans_n] = Cut_point(ans);
+aber_hist = [];
+aber_hist = ans;
+[k_n] = All(aber_hist);
