@@ -1,0 +1,28 @@
+function [ans_n] = Cut_point(ans)
+ans_max = 0;
+ans_i = 0;
+ans_j = 0;
+for i=1:3299
+     for j=1:4952
+           if ans(j,i)>ans_max
+              ans_max=ans(j,i);
+              ans_j=j;
+              ans_i=i;
+           end
+     end
+end
+for n=1:10
+    for m=1:10
+              cur_m=ans_j-5+m;
+              cur_n=ans_i-5+n;
+              ans_n(m,n)=ans_n(cur_m,cur_n);
+    end 
+end
+
+% p_2_mat = 'p_2.mat';
+% save(p_2_mat); 
+
+% figure();
+% imagesc(p_2);
+% colormap gray;
+% axis equal;
