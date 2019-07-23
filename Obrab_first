@@ -1,0 +1,7 @@
+function [k_first] = Obrab_first
+WGopen;
+WGGP;
+[ans_n] = Cut_point(ans);
+aber_hist_first = [];
+aber_hist_first = ans;
+[k_n] = All(aber_hist_first);
