@@ -1,0 +1,32 @@
+load('nev_koef.mat', 'nev_koef');
+load('aber_hist.mat', 'aber_hist');
+u_1 = [1 0]; %начальное направление движения движка gora1
+u_2 = [0 1]; %начальное направление движения движка vera1
+d_final = 0;
+
+% E=aber_hist(aber_hist~=0);
+% [y,x]=find(aber_hist~=0);
+% H=[ones(length(x),1) x y x.^2 y.^2];
+% C=H\E;
+% x_c=-C(2)/(2*C(4)); %условно на данный момент координаты центра точки
+% y_c=-C(3)/(2*C(5)); %условно на данный момент координаты центра точки
+centr= find(aber_hist(1,:) == max(aber_hist(1,:)));
+
+% для движка gora1 выполняем программу пока d ~= 2
+if d_final ~= 2
+syms d  
+aber_func(d) = nev_koef(1, 2)*(2 + d*u_1(1,2)) + nev_koef(1, 3)*(5 + d*u_1(1,1)) + nev_koef(1, 4)*((2 + d*u_1(1,2))^2 + (5 + d*u_1(1,1))^2) + (nev_koef(1, 5)*2*(5 + d*u_1(1,1))*(2 + d*u_1(1,2))); %проверка устранения астигматизма и дисторсии
+func_d = diff(aber_func, d);
+d_cur = solve(func_d == 0);
+d_final = eval(d_cur);
+
+a = x_c + d_final*u_1(1,1);
+b = y_c + d_final*u_1(1,2);
+
+x_new = x_c - a;
+y_new = y_c - b;
+norm = sqrt(x_new^2 + y_new^2);
+u_new = [x_new y_new]/norm;
+u_new = u_1;
+end
+
