@@ -1,1 +1,40 @@
-<mxfile host="www.draw.io" modified="2019-11-11T22:00:01.805Z" agent="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_6) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/12.1.2 Safari/605.1.15" version="12.2.3" etag="yQ45HHCPWPQaadcdkaug" type="github" pages="1"><diagram id="SjifkEPjJ_yNczF8SN-W">UzV2zq1wL0osyPDNT0nNUTV2VTV2LsrPL4GwciucU3NyVI0MMlNUjV1UjYwMgFjVyA2HrCFY1qAgsSg1rwSLBiADYTaQg2Y1AA==</diagram></mxfile>
+<mxfile host="www.draw.io" modified="2019-11-11T22:11:25.102Z" agent="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_6) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/12.1.2 Safari/605.1.15" etag="8n2Ld-mPRNOcPvjJVfhb" version="12.2.3" type="github" pages="1">
+  <diagram id="SjifkEPjJ_yNczF8SN-W" name="Page-1">
+    <mxGraphModel dx="932" dy="648" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0"/>
+        <mxCell id="1" parent="0"/>
+        <mxCell id="ad0Wn7WB4IEIS1zrlACl-8" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=1;entryY=0.5;entryDx=0;entryDy=0;strokeWidth=4;strokeColor=#007FFF;" edge="1" parent="1" source="ad0Wn7WB4IEIS1zrlACl-1" target="ad0Wn7WB4IEIS1zrlACl-2">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="580" y="310" as="targetPoint"/>
+            <Array as="points">
+              <mxPoint x="550" y="170"/>
+              <mxPoint x="550" y="330"/>
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ad0Wn7WB4IEIS1zrlACl-1" value="&lt;span style=&quot;font-family: &amp;#34;times new roman&amp;#34; ; font-size: 17px&quot;&gt;Агент = Шаговые двигатели&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;strokeWidth=3;strokeColor=#007FFF;" vertex="1" parent="1">
+          <mxGeometry x="353" y="130" width="157" height="80" as="geometry"/>
+        </mxCell>
+        <mxCell id="ad0Wn7WB4IEIS1zrlACl-13" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#007FFF;strokeWidth=4;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="ad0Wn7WB4IEIS1zrlACl-2" target="ad0Wn7WB4IEIS1zrlACl-1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="280" y="190" as="targetPoint"/>
+            <Array as="points">
+              <mxPoint x="310" y="330"/>
+              <mxPoint x="310" y="170"/>
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ad0Wn7WB4IEIS1zrlACl-2" value="&lt;font style=&quot;font-size: 17px&quot; face=&quot;Times New Roman&quot;&gt;Среда = Оптический элемент&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;strokeColor=#007FFF;strokeWidth=3;" vertex="1" parent="1">
+          <mxGeometry x="353" y="290" width="157" height="80" as="geometry"/>
+        </mxCell>
+        <mxCell id="ad0Wn7WB4IEIS1zrlACl-14" value="&lt;font style=&quot;font-size: 17px&quot; face=&quot;Times New Roman&quot;&gt;Действие = Смещение какого-либо двигателя&lt;/font&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="560" y="220" width="160" height="60" as="geometry"/>
+        </mxCell>
+        <mxCell id="ad0Wn7WB4IEIS1zrlACl-15" value="&lt;font style=&quot;font-size: 17px&quot; face=&quot;Times New Roman&quot;&gt;Состояние = Значение аберрации&amp;nbsp;&lt;br&gt;&lt;br&gt;Назначение награды&lt;br&gt;&lt;/font&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="140" y="200" width="160" height="80" as="geometry"/>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
