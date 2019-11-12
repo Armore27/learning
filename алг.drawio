@@ -1,6 +1,6 @@
-<mxfile host="www.draw.io" modified="2019-11-11T22:33:32.548Z" agent="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_6) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/12.1.2 Safari/605.1.15" etag="hm9wcaPSGNqwnGFTYpwG" version="12.2.3" type="github" pages="1">
+<mxfile host="www.draw.io" modified="2019-11-12T12:07:44.418Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.87 Safari/537.36" etag="tS_JcNCA6kfYGSYFmHBp" version="12.2.4" type="github" pages="1">
   <diagram id="9VwkEmP3wqvbAV9qxTcu" name="Page-1">
-    <mxGraphModel dx="1243" dy="864" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+    <mxGraphModel dx="1182" dy="1852" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
       <root>
         <mxCell id="0"/>
         <mxCell id="1" parent="0"/>
@@ -10,7 +10,7 @@
         <mxCell id="MKImIRo95kQJKEtbUtot-1" value="&lt;font face=&quot;Times New Roman&quot; style=&quot;font-size: 20px&quot;&gt;Система разъюстирована&lt;/font&gt;" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=#66B2FF;strokeWidth=5;" parent="1" vertex="1">
           <mxGeometry x="70" y="80" width="170" height="80" as="geometry"/>
         </mxCell>
-        <mxCell id="SNTUSOlxbImxSfcfb9JJ-6" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#007FFF;strokeWidth=4;" edge="1" parent="1" source="MKImIRo95kQJKEtbUtot-2" target="MKImIRo95kQJKEtbUtot-4">
+        <mxCell id="SNTUSOlxbImxSfcfb9JJ-6" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#007FFF;strokeWidth=4;" parent="1" source="MKImIRo95kQJKEtbUtot-2" target="MKImIRo95kQJKEtbUtot-4" edge="1">
           <mxGeometry relative="1" as="geometry"/>
         </mxCell>
         <mxCell id="MKImIRo95kQJKEtbUtot-2" value="&lt;font style=&quot;font-size: 20px&quot; face=&quot;Times New Roman&quot;&gt;Определить аберрации в системе&lt;/font&gt;" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=#66B2FF;strokeWidth=5;" parent="1" vertex="1">
@@ -19,8 +19,8 @@
         <mxCell id="MKImIRo95kQJKEtbUtot-34" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;strokeColor=#66B2FF;strokeWidth=5;" parent="1" source="MKImIRo95kQJKEtbUtot-4" target="MKImIRo95kQJKEtbUtot-6" edge="1">
           <mxGeometry relative="1" as="geometry">
             <Array as="points">
-              <mxPoint x="665" y="300"/>
-              <mxPoint x="215" y="300"/>
+              <mxPoint x="665" y="320"/>
+              <mxPoint x="604" y="320"/>
             </Array>
           </mxGeometry>
         </mxCell>
@@ -30,46 +30,54 @@
         <mxCell id="MKImIRo95kQJKEtbUtot-11" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#66B2FF;strokeWidth=5;" parent="1" source="MKImIRo95kQJKEtbUtot-6" target="MKImIRo95kQJKEtbUtot-10" edge="1">
           <mxGeometry relative="1" as="geometry"/>
         </mxCell>
-        <mxCell id="MKImIRo95kQJKEtbUtot-14" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#66B2FF;strokeWidth=5;" parent="1" source="MKImIRo95kQJKEtbUtot-6" target="MKImIRo95kQJKEtbUtot-13" edge="1">
-          <mxGeometry relative="1" as="geometry"/>
+        <mxCell id="MKImIRo95kQJKEtbUtot-14" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#66B2FF;strokeWidth=5;entryX=0.5;entryY=1;entryDx=0;entryDy=0;" parent="1" source="MKImIRo95kQJKEtbUtot-6" target="MKImIRo95kQJKEtbUtot-13" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="930" y="460" as="targetPoint"/>
+          </mxGeometry>
         </mxCell>
         <mxCell id="MKImIRo95kQJKEtbUtot-6" value="&lt;font face=&quot;Times New Roman&quot; style=&quot;font-size: 20px&quot;&gt;&lt;span&gt;Коэффициент &lt;/span&gt;&lt;br&gt;&lt;span&gt;&amp;nbsp;приемлем&lt;/span&gt;&lt;span&gt;?&lt;/span&gt;&lt;/font&gt;" style="rhombus;whiteSpace=wrap;html=1;strokeColor=#66B2FF;strokeWidth=5;" parent="1" vertex="1">
-          <mxGeometry x="110" y="370" width="210" height="180" as="geometry"/>
+          <mxGeometry x="499" y="410" width="210" height="180" as="geometry"/>
         </mxCell>
         <mxCell id="MKImIRo95kQJKEtbUtot-12" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#66B2FF;strokeWidth=5;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" parent="1" source="MKImIRo95kQJKEtbUtot-10" target="MKImIRo95kQJKEtbUtot-6" edge="1">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="40" y="360" as="targetPoint"/>
             <Array as="points">
-              <mxPoint x="50" y="640"/>
-              <mxPoint x="50" y="460"/>
+              <mxPoint x="460" y="640"/>
+              <mxPoint x="460" y="500"/>
             </Array>
           </mxGeometry>
         </mxCell>
         <mxCell id="MKImIRo95kQJKEtbUtot-10" value="&lt;font style=&quot;font-size: 20px&quot; face=&quot;Times New Roman&quot;&gt;Сместить выбранный двигатель&lt;/font&gt;" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=#66B2FF;strokeWidth=5;" parent="1" vertex="1">
-          <mxGeometry x="146" y="599.5" width="138" height="90" as="geometry"/>
+          <mxGeometry x="535" y="640" width="138" height="90" as="geometry"/>
         </mxCell>
         <mxCell id="MKImIRo95kQJKEtbUtot-16" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#66B2FF;strokeWidth=5;" parent="1" source="MKImIRo95kQJKEtbUtot-13" target="MKImIRo95kQJKEtbUtot-15" edge="1">
           <mxGeometry relative="1" as="geometry"/>
         </mxCell>
-        <mxCell id="MKImIRo95kQJKEtbUtot-13" value="&lt;font style=&quot;font-size: 20px&quot; face=&quot;Times New Roman&quot;&gt;Переход к компенсации расфокуса&lt;/font&gt;" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=#66B2FF;strokeWidth=5;" parent="1" vertex="1">
-          <mxGeometry x="370" y="420" width="160" height="80" as="geometry"/>
+        <mxCell id="ISBVI11c_wgm5dG0wr30-2" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=5;strokeColor=#66B2FF;" edge="1" parent="1" source="MKImIRo95kQJKEtbUtot-13">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="270" y="120" as="targetPoint"/>
+            <Array as="points">
+              <mxPoint x="800" y="50"/>
+              <mxPoint x="270" y="50"/>
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="MKImIRo95kQJKEtbUtot-13" value="&lt;font style=&quot;font-size: 20px&quot; face=&quot;Times New Roman&quot;&gt;Переход к компенсации следующей аберрации&lt;/font&gt;" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=#66B2FF;strokeWidth=5;" parent="1" vertex="1">
+          <mxGeometry x="720" y="285" width="170" height="120" as="geometry"/>
         </mxCell>
         <mxCell id="MKImIRo95kQJKEtbUtot-18" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#66B2FF;strokeWidth=5;" parent="1" source="MKImIRo95kQJKEtbUtot-15" target="MKImIRo95kQJKEtbUtot-17" edge="1">
           <mxGeometry relative="1" as="geometry"/>
         </mxCell>
         <mxCell id="MKImIRo95kQJKEtbUtot-15" value="&lt;font style=&quot;font-size: 20px&quot; face=&quot;Times New Roman&quot;&gt;Получить изображение исследуемой точки&lt;/font&gt;" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=#66B2FF;strokeWidth=5;" parent="1" vertex="1">
-          <mxGeometry x="737" y="420" width="170" height="80" as="geometry"/>
+          <mxGeometry x="1027.5" y="300" width="175" height="90" as="geometry"/>
         </mxCell>
-        <mxCell id="MKImIRo95kQJKEtbUtot-20" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#66B2FF;strokeWidth=5;" parent="1" source="MKImIRo95kQJKEtbUtot-17" target="MKImIRo95kQJKEtbUtot-19" edge="1">
+        <mxCell id="ISBVI11c_wgm5dG0wr30-6" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#66B2FF;strokeWidth=5;" edge="1" parent="1" source="MKImIRo95kQJKEtbUtot-17">
           <mxGeometry relative="1" as="geometry">
-            <Array as="points">
-              <mxPoint x="1087" y="570"/>
-              <mxPoint x="947" y="570"/>
-            </Array>
+            <mxPoint x="1400" y="480" as="targetPoint"/>
           </mxGeometry>
         </mxCell>
         <mxCell id="MKImIRo95kQJKEtbUtot-17" value="&lt;font style=&quot;font-size: 20px&quot; face=&quot;Times New Roman&quot;&gt;Выяснить, какой из шаговых двигателей отвечает за расфокусировку&lt;/font&gt;" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=#66B2FF;strokeWidth=5;" parent="1" vertex="1">
-          <mxGeometry x="991.5" y="405" width="190" height="110" as="geometry"/>
+          <mxGeometry x="1305" y="290" width="190" height="110" as="geometry"/>
         </mxCell>
         <mxCell id="MKImIRo95kQJKEtbUtot-35" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#66B2FF;strokeWidth=5;" parent="1" source="MKImIRo95kQJKEtbUtot-19" target="MKImIRo95kQJKEtbUtot-26" edge="1">
           <mxGeometry relative="1" as="geometry"/>
@@ -78,46 +86,47 @@
           <mxGeometry relative="1" as="geometry"/>
         </mxCell>
         <mxCell id="MKImIRo95kQJKEtbUtot-19" value="&lt;font style=&quot;font-size: 20px&quot; face=&quot;Times New Roman&quot;&gt;&lt;span style=&quot;white-space: normal&quot;&gt;Коэффициент&amp;nbsp;&lt;/span&gt;&lt;br style=&quot;white-space: normal&quot;&gt;&lt;span style=&quot;white-space: normal&quot;&gt;приемлем?&lt;/span&gt;&lt;/font&gt;" style="rhombus;whiteSpace=wrap;html=1;strokeColor=#66B2FF;strokeWidth=5;" parent="1" vertex="1">
-          <mxGeometry x="847" y="631.5" width="200" height="180" as="geometry"/>
+          <mxGeometry x="1300" y="480" width="200" height="180" as="geometry"/>
         </mxCell>
-        <mxCell id="SNTUSOlxbImxSfcfb9JJ-9" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#66B2FF;strokeWidth=4;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="MKImIRo95kQJKEtbUtot-21" target="MKImIRo95kQJKEtbUtot-19">
+        <mxCell id="SNTUSOlxbImxSfcfb9JJ-9" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#66B2FF;strokeWidth=4;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" parent="1" source="MKImIRo95kQJKEtbUtot-21" target="MKImIRo95kQJKEtbUtot-19" edge="1">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="640" y="720" as="targetPoint"/>
             <Array as="points">
-              <mxPoint x="800" y="899"/>
-              <mxPoint x="800" y="722"/>
+              <mxPoint x="1400" y="840"/>
+              <mxPoint x="1240" y="840"/>
+              <mxPoint x="1240" y="570"/>
             </Array>
           </mxGeometry>
         </mxCell>
         <mxCell id="MKImIRo95kQJKEtbUtot-21" value="&lt;span style=&quot;white-space: normal&quot;&gt;&lt;font style=&quot;font-size: 20px&quot; face=&quot;Times New Roman&quot;&gt;Сместить выбранный двигатель&lt;/font&gt;&lt;/span&gt;" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=#66B2FF;strokeWidth=5;" parent="1" vertex="1">
-          <mxGeometry x="877" y="859" width="140" height="80" as="geometry"/>
+          <mxGeometry x="1330" y="721.5" width="140" height="80" as="geometry"/>
         </mxCell>
         <mxCell id="MKImIRo95kQJKEtbUtot-28" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#66B2FF;strokeWidth=5;" parent="1" source="MKImIRo95kQJKEtbUtot-26" target="MKImIRo95kQJKEtbUtot-27" edge="1">
           <mxGeometry relative="1" as="geometry"/>
         </mxCell>
         <mxCell id="MKImIRo95kQJKEtbUtot-26" value="&lt;span style=&quot;white-space: normal&quot;&gt;&lt;font style=&quot;font-size: 20px&quot; face=&quot;Times New Roman&quot;&gt;Система съюстирована, выход из цикла&lt;/font&gt;&lt;/span&gt;" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=#66B2FF;strokeWidth=5;" parent="1" vertex="1">
-          <mxGeometry x="1105" y="674" width="153" height="95" as="geometry"/>
+          <mxGeometry x="1567" y="522.5" width="153" height="95" as="geometry"/>
         </mxCell>
         <mxCell id="MKImIRo95kQJKEtbUtot-27" value="&lt;span style=&quot;font-size: 20px ; white-space: normal&quot;&gt;&lt;font face=&quot;Times New Roman&quot;&gt;Получение интерферограммы,&lt;br&gt;финальная проверка&lt;/font&gt;&lt;/span&gt;" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=#66B2FF;strokeWidth=5;" parent="1" vertex="1">
-          <mxGeometry x="1330" y="674" width="170" height="95" as="geometry"/>
+          <mxGeometry x="1780" y="522.5" width="170" height="95" as="geometry"/>
         </mxCell>
         <mxCell id="MKImIRo95kQJKEtbUtot-30" value="" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=#66FF66;strokeWidth=5;fillColor=none;" parent="1" vertex="1">
-          <mxGeometry x="30" y="230" width="650" height="480" as="geometry"/>
+          <mxGeometry x="289" y="240" width="630" height="520" as="geometry"/>
         </mxCell>
         <mxCell id="MKImIRo95kQJKEtbUtot-39" value="" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=#66FF66;strokeWidth=5;fillColor=none;" parent="1" vertex="1">
-          <mxGeometry x="700" y="350" width="830" height="610" as="geometry"/>
+          <mxGeometry x="985" y="240" width="995" height="640" as="geometry"/>
         </mxCell>
-        <mxCell id="MKImIRo95kQJKEtbUtot-44" value="&lt;font style=&quot;font-size: 20px&quot; face=&quot;Times New Roman&quot;&gt;Первый этап: определение аберрации, выбор двигателя&lt;/font&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
-          <mxGeometry x="50" y="20" width="590" height="70" as="geometry"/>
+        <mxCell id="MKImIRo95kQJKEtbUtot-44" value="&lt;font style=&quot;font-size: 22px&quot; face=&quot;Times New Roman&quot;&gt;Первый этап: определение аберрации, выбор двигателя&lt;/font&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
+          <mxGeometry x="40.5" y="-10" width="590" height="70" as="geometry"/>
         </mxCell>
-        <mxCell id="MKImIRo95kQJKEtbUtot-45" value="&lt;font style=&quot;font-size: 20px&quot; face=&quot;Times New Roman&quot;&gt;Второй этап: коррекция аберраций, кроме расфокусировки&lt;/font&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
-          <mxGeometry x="80" y="220" width="571" height="80" as="geometry"/>
+        <mxCell id="MKImIRo95kQJKEtbUtot-45" value="&lt;font style=&quot;font-size: 22px&quot; face=&quot;Times New Roman&quot;&gt;Второй этап: коррекция аберраций,&lt;br&gt;&amp;nbsp;кроме расфокусировки&lt;/font&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
+          <mxGeometry x="189" y="245" width="571" height="80" as="geometry"/>
         </mxCell>
-        <mxCell id="MKImIRo95kQJKEtbUtot-46" value="&lt;font style=&quot;font-size: 20px&quot; face=&quot;Times New Roman&quot;&gt;Третий этап: фокусировка&lt;/font&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;rotation=0;" parent="1" vertex="1">
-          <mxGeometry x="730" y="320" width="280" height="100" as="geometry"/>
+        <mxCell id="MKImIRo95kQJKEtbUtot-46" value="&lt;font style=&quot;font-size: 22px&quot; face=&quot;Times New Roman&quot;&gt;Третий этап: фокусировка&lt;/font&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;rotation=0;" parent="1" vertex="1">
+          <mxGeometry x="1000" y="220" width="280" height="100" as="geometry"/>
         </mxCell>
         <mxCell id="MKImIRo95kQJKEtbUtot-29" value="" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=#66FF66;strokeWidth=5;fillColor=none;" parent="1" vertex="1">
-          <mxGeometry x="40" y="30" width="775" height="150" as="geometry"/>
+          <mxGeometry x="40" width="790" height="200" as="geometry"/>
         </mxCell>
       </root>
     </mxGraphModel>
