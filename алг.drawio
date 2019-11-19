@@ -1,6 +1,6 @@
-<mxfile host="www.draw.io" modified="2019-11-12T12:07:44.418Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.87 Safari/537.36" etag="tS_JcNCA6kfYGSYFmHBp" version="12.2.4" type="github" pages="1">
+<mxfile host="www.draw.io" modified="2019-11-19T10:28:30.863Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.97 Safari/537.36" etag="eWXHT--cJfITRNgZ2jHz" version="12.2.6" type="github" pages="1">
   <diagram id="9VwkEmP3wqvbAV9qxTcu" name="Page-1">
-    <mxGraphModel dx="1182" dy="1852" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+    <mxGraphModel dx="2009" dy="683" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
       <root>
         <mxCell id="0"/>
         <mxCell id="1" parent="0"/>
@@ -53,7 +53,7 @@
         <mxCell id="MKImIRo95kQJKEtbUtot-16" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#66B2FF;strokeWidth=5;" parent="1" source="MKImIRo95kQJKEtbUtot-13" target="MKImIRo95kQJKEtbUtot-15" edge="1">
           <mxGeometry relative="1" as="geometry"/>
         </mxCell>
-        <mxCell id="ISBVI11c_wgm5dG0wr30-2" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=5;strokeColor=#66B2FF;" edge="1" parent="1" source="MKImIRo95kQJKEtbUtot-13">
+        <mxCell id="ISBVI11c_wgm5dG0wr30-2" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=5;strokeColor=#66B2FF;" parent="1" source="MKImIRo95kQJKEtbUtot-13" edge="1">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="270" y="120" as="targetPoint"/>
             <Array as="points">
@@ -71,7 +71,7 @@
         <mxCell id="MKImIRo95kQJKEtbUtot-15" value="&lt;font style=&quot;font-size: 20px&quot; face=&quot;Times New Roman&quot;&gt;Получить изображение исследуемой точки&lt;/font&gt;" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=#66B2FF;strokeWidth=5;" parent="1" vertex="1">
           <mxGeometry x="1027.5" y="300" width="175" height="90" as="geometry"/>
         </mxCell>
-        <mxCell id="ISBVI11c_wgm5dG0wr30-6" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#66B2FF;strokeWidth=5;" edge="1" parent="1" source="MKImIRo95kQJKEtbUtot-17">
+        <mxCell id="ISBVI11c_wgm5dG0wr30-6" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#66B2FF;strokeWidth=5;" parent="1" source="MKImIRo95kQJKEtbUtot-17" edge="1">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="1400" y="480" as="targetPoint"/>
           </mxGeometry>
@@ -114,19 +114,19 @@
           <mxGeometry x="289" y="240" width="630" height="520" as="geometry"/>
         </mxCell>
         <mxCell id="MKImIRo95kQJKEtbUtot-39" value="" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=#66FF66;strokeWidth=5;fillColor=none;" parent="1" vertex="1">
-          <mxGeometry x="985" y="240" width="995" height="640" as="geometry"/>
+          <mxGeometry x="990" y="210" width="995" height="660" as="geometry"/>
         </mxCell>
-        <mxCell id="MKImIRo95kQJKEtbUtot-44" value="&lt;font style=&quot;font-size: 22px&quot; face=&quot;Times New Roman&quot;&gt;Первый этап: определение аберрации, выбор двигателя&lt;/font&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
-          <mxGeometry x="40.5" y="-10" width="590" height="70" as="geometry"/>
+        <mxCell id="MKImIRo95kQJKEtbUtot-44" value="&lt;font style=&quot;font-size: 31px&quot; face=&quot;Times New Roman&quot;&gt;Первый этап&lt;/font&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
+          <mxGeometry x="-140" width="590" height="70" as="geometry"/>
         </mxCell>
-        <mxCell id="MKImIRo95kQJKEtbUtot-45" value="&lt;font style=&quot;font-size: 22px&quot; face=&quot;Times New Roman&quot;&gt;Второй этап: коррекция аберраций,&lt;br&gt;&amp;nbsp;кроме расфокусировки&lt;/font&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
+        <mxCell id="MKImIRo95kQJKEtbUtot-45" value="&lt;font face=&quot;Times New Roman&quot;&gt;&lt;font style=&quot;font-size: 31px&quot;&gt;Второй этап&lt;/font&gt;&lt;br&gt;&lt;/font&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
           <mxGeometry x="189" y="245" width="571" height="80" as="geometry"/>
         </mxCell>
-        <mxCell id="MKImIRo95kQJKEtbUtot-46" value="&lt;font style=&quot;font-size: 22px&quot; face=&quot;Times New Roman&quot;&gt;Третий этап: фокусировка&lt;/font&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;rotation=0;" parent="1" vertex="1">
-          <mxGeometry x="1000" y="220" width="280" height="100" as="geometry"/>
+        <mxCell id="MKImIRo95kQJKEtbUtot-46" value="&lt;font style=&quot;font-size: 31px&quot; face=&quot;Times New Roman&quot;&gt;Третий этап&lt;/font&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;rotation=0;" parent="1" vertex="1">
+          <mxGeometry x="1597.5" y="250" width="280" height="100" as="geometry"/>
         </mxCell>
         <mxCell id="MKImIRo95kQJKEtbUtot-29" value="" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=#66FF66;strokeWidth=5;fillColor=none;" parent="1" vertex="1">
-          <mxGeometry x="40" width="790" height="200" as="geometry"/>
+          <mxGeometry x="37" y="10" width="790" height="200" as="geometry"/>
         </mxCell>
       </root>
     </mxGraphModel>
